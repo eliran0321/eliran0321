@@ -137,15 +137,65 @@
             justify-content: center;
             gap: 10px;
             margin-top: 20px;
+            position: relative;
+        }
+        .gallery .image-container {
+            width: calc(50% - 10px);
+            margin-bottom: 15px;
+            position: relative;
         }
         .gallery img {
-            width: calc(50% - 10px);
+            width: 100%;
             border-radius: 8px;
             transition: transform 0.3s;
             border: 2px solid white;
         }
         .gallery img:hover {
             transform: scale(1.05);
+        }
+        .gallery .image-caption {
+            font-size: 12px;
+            margin-top: 5px;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+        }
+        .scroll-hint {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.8);
+            font-size: 12px;
+            background-color: rgba(0,0,0,0.2);
+            padding: 5px 10px;
+            border-radius: 20px;
+            opacity: 1;
+            transition: opacity 0.5s;
+            white-space: nowrap;
+            z-index: 1;
+        }
+        .scroll-icon {
+            position: absolute;
+            bottom: -25px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            animation: scrollMotion 2s infinite;
+            opacity: 0.7;
+        }
+        @keyframes scrollMotion {
+            0% {
+                transform: translateY(0);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(10px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 0.7;
+            }
         }
         .costume-ideas {
             background: rgba(255, 255, 255, 0.3);
@@ -191,11 +241,26 @@
         
         <!-- גלריית תמונות משנים קודמות -->
         <h3>תמונות מאירועי פורים קודמים</h3>
-        <div class="gallery">
-            <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557741/PURIM/davd4gh0krhaseoabhhe.jpg" alt="תמונת פורים 1" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x150?text=תמונה+1'">
-            <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557740/PURIM/a4s7yyfkj9hpplulk44h.jpg" alt="תמונת פורים 2" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x150?text=תמונה+2'">
-            <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557740/PURIM/ozn3jnvdr6ipumowxquq.jpg" alt="תמונת פורים 3" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x150?text=תמונה+3'">
-            <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557741/PURIM/dsiiblsaswso7f2xrhmy.jpg" alt="תמונת פורים 4" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x150?text=תמונה+4'">
+        <div class="gallery" id="gallery">
+            <div class="image-container">
+                <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557741/PURIM/davd4gh0krhaseoabhhe.jpg" alt="תמונת פורים 1" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x150?text=תמונה+1'">
+                <div class="image-caption">לחץ ארוך לפתיחת התמונה</div>
+            </div>
+            <div class="image-container">
+                <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557740/PURIM/a4s7yyfkj9hpplulk44h.jpg" alt="תמונת פורים 2" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x150?text=תמונה+2'">
+                <div class="image-caption">לחץ ארוך לפתיחת התמונה</div>
+            </div>
+            <div class="image-container">
+                <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557740/PURIM/ozn3jnvdr6ipumowxquq.jpg" alt="תמונת פורים 3" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x150?text=תמונה+3'">
+                <div class="image-caption">לחץ ארוך לפתיחת התמונה</div>
+            </div>
+            <div class="image-container">
+                <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557741/PURIM/dsiiblsaswso7f2xrhmy.jpg" alt="תמונת פורים 4" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x150?text=תמונה+4'">
+                <div class="image-caption">לחץ ארוך לפתיחת התמונה</div>
+            </div>
+            
+            <div class="scroll-hint" id="scrollHint">גלול כדי לגלות תמונות נוספות</div>
+            <div class="scroll-icon">👆</div>
         </div>
 
         <p>📲 רוצה להזמין חברים? שלח להם את ההזמנה!</p>
@@ -349,6 +414,73 @@
 
             return isValid;
         }
+        
+        // פונקציית גלילה להסתרת ההודעה
+        window.addEventListener('load', function() {
+            const scrollHint = document.getElementById('scrollHint');
+            const gallery = document.getElementById('gallery');
+            
+            // מגדיר האזנה לגלילה
+            window.addEventListener('scroll', function() {
+                // מסתיר את ההודעה אחרי גלילה
+                if (window.scrollY > 100) {
+                    scrollHint.style.opacity = '0';
+                    setTimeout(function() {
+                        scrollHint.style.display = 'none';
+                    }, 500);
+                }
+            });
+            
+            // הוספת יכולת לחיצה ארוכה לתמונות
+            const images = document.querySelectorAll('.gallery img');
+            images.forEach(img => {
+                // הגדרת אירוע לחיצה ארוכה (עבור מובייל)
+                let pressTimer;
+                
+                img.addEventListener('touchstart', function(e) {
+                    pressTimer = setTimeout(function() {
+                        openImageFullscreen(img.src);
+                    }, 500);
+                });
+                
+                img.addEventListener('touchend', function() {
+                    clearTimeout(pressTimer);
+                });
+                
+                // לחיצה רגילה (עבור דסקטופ)
+                img.addEventListener('click', function() {
+                    openImageFullscreen(img.src);
+                });
+            });
+            
+            // פתיחת תמונה במסך מלא
+            function openImageFullscreen(src) {
+                const fullscreenOverlay = document.createElement('div');
+                fullscreenOverlay.style.position = 'fixed';
+                fullscreenOverlay.style.top = '0';
+                fullscreenOverlay.style.left = '0';
+                fullscreenOverlay.style.width = '100%';
+                fullscreenOverlay.style.height = '100%';
+                fullscreenOverlay.style.backgroundColor = 'rgba(0,0,0,0.9)';
+                fullscreenOverlay.style.zIndex = '9999';
+                fullscreenOverlay.style.display = 'flex';
+                fullscreenOverlay.style.justifyContent = 'center';
+                fullscreenOverlay.style.alignItems = 'center';
+                
+                const fullscreenImg = document.createElement('img');
+                fullscreenImg.src = src;
+                fullscreenImg.style.maxWidth = '90%';
+                fullscreenImg.style.maxHeight = '90%';
+                fullscreenImg.style.borderRadius = '8px';
+                
+                fullscreenOverlay.appendChild(fullscreenImg);
+                document.body.appendChild(fullscreenOverlay);
+                
+                fullscreenOverlay.addEventListener('click', function() {
+                    document.body.removeChild(fullscreenOverlay);
+                });
+            }
+        });
     </script>
 </body>
 </html>
