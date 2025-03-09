@@ -123,6 +123,34 @@
         .submit-btn:hover {
             background-color: #e65c00;
         }
+        .event-image {
+            width: 100%;
+            max-width: 350px;
+            border-radius: 10px;
+            margin: 15px auto;
+            display: block;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .gallery img {
+            width: calc(50% - 10px);
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+        .costume-ideas {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -130,12 +158,21 @@
     <div class="container">
         <div class="title">משתה פורים תשפ"ה</div>
         <div class="subtitle">🎭 מי שנכנס אדר מרבין בשמחה! 🎭</div>
+        
+        <!-- תמונה ראשית של האירוע -->
+        <img src="images/purim-main.jpg" alt="חגיגת פורים" class="event-image">
+        
         <p>יום ו', 14 במרץ, 10:30 - 14:30</p>
         <p>בית משפחת נחמיה, רח' פרנק 15, חדרה</p>
 
         <div class="buttons">
             <button onclick="openPopup('yes')">אשתתף</button>
             <button onclick="openPopup('no')">לא אשתתף</button>
+        </div>
+        
+        <div class="costume-ideas">
+            <h3>🎭 רעיונות לתחפושות</h3>
+            <p>הגיעו מחופשים! שנה זו הנושא הוא: "דמויות מהעבר והעתיד"</p>
         </div>
 
         <div class="weather">
@@ -148,6 +185,15 @@
             <h3>📍 הוראות הגעה</h3>
             <a href="https://waze.com/ul?q=רח' פרנק 15, חדרה" class="invite">🚗 ניווט בוויז</a>
         </div>
+        
+        <!-- גלריית תמונות משנים קודמות -->
+        <h3>תמונות מאירועי פורים קודמים</h3>
+        <div class="gallery">
+            <img src="images/purim1.jpg" alt="תמונת פורים 1">
+            <img src="images/purim2.jpg" alt="תמונת פורים 2">
+            <img src="images/purim3.jpg" alt="תמונת פורים 3">
+            <img src="images/purim4.jpg" alt="תמונת פורים 4">
+        </div>
 
         <p>📲 רוצה להזמין חברים? שלח להם את ההזמנה!</p>
         <button class="invite" onclick="sendWhatsAppInvite()">💬 שליחת הזמנה בווטסאפ</button>
@@ -158,7 +204,11 @@
     <!-- אישור השתתפות -->
     <div id="popup" class="popup">
         <h2>אישור השתתפות</h2>
-        <form id="participation-form" onsubmit="submitForm(event)">
+        <form id="participation-form" action="https://formsubmit.co/ELIRAN0321@GMAIL.COM" method="POST" onsubmit="showThankYou(event)">
+            <input type="hidden" name="_subject" value="הרשמה לאירוע פורים">
+            <input type="hidden" name="_next" value="https://eliran0321.github.io/">
+            <input type="hidden" name="_captcha" value="false">
+            
             <div class="form-group">
                 <label for="firstName">שם פרטי *</label>
                 <input type="text" id="firstName" name="firstName" required>
@@ -183,6 +233,7 @@
         <h2>תודה על ההרשמה!</h2>
         <p>נשמח לראותכם באירוע!</p>
         <p>פרטי ההרשמה נשלחו בהצלחה.</p>
+        <img src="images/thanks.jpg" alt="תודה" style="max-width: 100%; border-radius: 8px; margin-top: 10px;">
         <button onclick="closePopup()" class="submit-btn">סגור</button>
     </div>
 
@@ -191,6 +242,7 @@
         <h2>האמת שזה ממש מבאס... 😢</h2>
         <p>אבל מצווה גדולה להיות בשמחה!</p>
         <p>נשמח לראותך בפעם אחרת!</p>
+        <img src="images/sorry.jpg" alt="מבאס" style="max-width: 100%; border-radius: 8px; margin-top: 10px;">
         <button onclick="closePopup()" class="submit-btn">סגור</button>
     </div>
 
@@ -218,69 +270,13 @@
             window.open(whatsappURL, "_blank");
         }
 
-        function validateForm() {
-            let isValid = true;
-            const firstName = document.getElementById('firstName').value;
-            const lastName = document.getElementById('lastName').value;
-            const participants = document.getElementById('participants').value;
-
-            // בדיקת שם פרטי
-            if (!firstName || firstName.trim() === "") {
-                document.getElementById('firstName-error').style.display = 'block';
-                isValid = false;
-            } else {
-                document.getElementById('firstName-error').style.display = 'none';
-            }
-
-            // בדיקת שם משפחה
-            if (!lastName || lastName.trim() === "") {
-                document.getElementById('lastName-error').style.display = 'block';
-                isValid = false;
-            } else {
-                document.getElementById('lastName-error').style.display = 'none';
-            }
-
-            // בדיקת מספר משתתפים
-            if (!participants || isNaN(participants) || participants < 1) {
-                document.getElementById('participants-error').style.display = 'block';
-                isValid = false;
-            } else {
-                document.getElementById('participants-error').style.display = 'none';
-            }
-
-            return isValid;
-        }
-
-        function submitForm(event) {
-            event.preventDefault();
-            
-            if (!validateForm()) {
-                return;
-            }
-
-            const firstName = document.getElementById('firstName').value;
-            const lastName = document.getElementById('lastName').value;
-            const participants = document.getElementById('participants').value;
-
-            // שליחת המידע למייל
-            const emailBody = `
-                שם פרטי: ${firstName}
-                שם משפחה: ${lastName}
-                מספר משתתפים: ${participants}
-            `;
-
-            // שליחה למייל באמצעות mailto
-            const mailtoLink = `mailto:ELIRAN0321@GMAIL.COM?subject=הרשמה לאירוע פורים&body=${encodeURIComponent(emailBody)}`;
-            
-            // פתיחת הלינק במשתמש, שיפתח את תוכנת המייל
-            window.open(mailtoLink);
-
-            // הצגת פופאפ תודה
+        function showThankYou(event) {
+            // השאר את הטופס לשליחה אך הצג את הודעת התודה
             document.getElementById('popup').style.display = 'none';
             document.getElementById('thank-you-popup').style.display = 'block';
             
-            // איפוס הטופס
-            document.getElementById('participation-form').reset();
+            // אל תמנע את שליחת הטופס למייל
+            // event.preventDefault();
         }
     </script>
 </body>
