@@ -141,13 +141,36 @@
         .submit-btn:hover {
             background-color: #e65c00;
         }
+        .event-image-container {
+            position: relative;
+            margin: 15px auto;
+            max-width: 350px;
+            cursor: pointer;
+        }
         .event-image {
             width: 100%;
-            max-width: 350px;
             border-radius: 10px;
-            margin: 15px auto;
             display: block;
             border: 3px solid white;
+            transition: transform 0.3s;
+        }
+        .event-image:hover {
+            transform: scale(1.03);
+        }
+        .image-overlay {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            margin: auto;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+            width: fit-content;
+            font-size: 14px;
+            opacity: 0.9;
         }
         .gallery {
             display: flex;
@@ -155,10 +178,9 @@
             justify-content: center;
             gap: 10px;
             margin-top: 20px;
-            position: relative;
         }
         .gallery .image-container {
-            width: calc(50% - 10px);
+            width: calc(33.33% - 10px);
             margin-bottom: 15px;
             position: relative;
         }
@@ -173,7 +195,7 @@
             transform: scale(1.05);
             box-shadow: 0 0 10px rgba(255,255,255,0.5);
         }
-        .gallery .image-caption {
+        .image-caption {
             font-size: 12px;
             margin-top: 5px;
             color: #fff;
@@ -241,7 +263,7 @@
         <div class="subtitle">🎭 מי שנכנס אדר מרבין בשמחה! 🎭</div>
         
         <!-- תמונה ראשית של האירוע -->
-        <div class="event-image-container" onclick="openImageFullscreen('https://res.cloudinary.com/dpy2hadid/image/upload/v1741557741/PURIM/dsiiblsaswso7f2xrhmy.jpg')">
+        <div class="event-image-container" id="mainImage">
             <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557741/PURIM/dsiiblsaswso7f2xrhmy.jpg" alt="חגיגת פורים" class="event-image" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x250?text=תמונת+פורים'">
             <div class="image-overlay">לחץ על התמונה להגדלה</div>
         </div>
@@ -274,25 +296,32 @@
         <!-- גלריית תמונות משנים קודמות -->
         <h3>תמונות מאירועי פורים קודמים</h3>
         <div class="gallery" id="gallery">
+            <!-- תמונה 1 -->
             <div class="image-container">
-                <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557741/PURIM/davd4gh0krhaseoabhhe.jpg" alt="תמונת פורים 1" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x150?text=תמונה+1'">
+                <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557741/PURIM/davd4gh0krhaseoabhhe.jpg" 
+                     alt="תמונת פורים 1" 
+                     id="gallery-img-1"
+                     onerror="this.onerror=null; this.src='https://via.placeholder.com/200x150?text=תמונה+1'">
                 <div class="image-caption">לחץ על התמונה להגדלה</div>
             </div>
+            
+            <!-- תמונה 2 -->
             <div class="image-container">
-                <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557740/PURIM/a4s7yyfkj9hpplulk44h.jpg" alt="תמונת פורים 2" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x150?text=תמונה+2'">
-                <div class="image-caption">לחץ ארוך לפתיחת התמונה</div>
-            </div>
-            <div class="image-container">
-                <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557740/PURIM/ozn3jnvdr6ipumowxquq.jpg" alt="תמונת פורים 3" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x150?text=תמונה+3'">
-                <div class="image-caption">לחץ ארוך לפתיחת התמונה</div>
-            </div>
-            <div class="image-container">
-                <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557741/PURIM/dsiiblsaswso7f2xrhmy.jpg" alt="תמונת פורים 4" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x150?text=תמונה+4'">
-                <div class="image-caption">לחץ ארוך לפתיחת התמונה</div>
+                <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557740/PURIM/a4s7yyfkj9hpplulk44h.jpg" 
+                     alt="תמונת פורים 2" 
+                     id="gallery-img-2"
+                     onerror="this.onerror=null; this.src='https://via.placeholder.com/200x150?text=תמונה+2'">
+                <div class="image-caption">לחץ על התמונה להגדלה</div>
             </div>
             
-            <div class="scroll-hint" id="scrollHint">גלול כדי לגלות תמונות נוספות</div>
-            <div class="scroll-icon">👆</div>
+            <!-- תמונה 3 -->
+            <div class="image-container">
+                <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557740/PURIM/ozn3jnvdr6ipumowxquq.jpg" 
+                     alt="תמונת פורים 3" 
+                     id="gallery-img-3"
+                     onerror="this.onerror=null; this.src='https://via.placeholder.com/200x150?text=תמונה+3'">
+                <div class="image-caption">לחץ על התמונה להגדלה</div>
+            </div>
         </div>
 
         <p>📲 רוצה להזמין חברים? שלח להם את ההזמנה!</p>
@@ -306,7 +335,6 @@
         <h2>אישור השתתפות</h2>
         <form id="participation-form" onsubmit="submitFormData(event)">
             <!-- טופס ללא action - נשתמש ב-AJAX -->
-            
             <div class="form-group">
                 <label for="firstName">שם פרטי *</label>
                 <input type="text" id="firstName" name="firstName" required>
@@ -345,23 +373,30 @@
     </div>
 
     <script>
-        // כשהדף נטען
-        window.onload = function() {
-            // חיבור אירועי לחיצה לתמונה הראשית
-            document.querySelector('.event-image-container').onclick = function() {
+        // כאשר הדף נטען
+        document.addEventListener('DOMContentLoaded', function() {
+            // פתיחת תמונה ראשית
+            document.getElementById('mainImage').addEventListener('click', function() {
                 openImageFullscreen('https://res.cloudinary.com/dpy2hadid/image/upload/v1741557741/PURIM/dsiiblsaswso7f2xrhmy.jpg');
-            };
-            
-            // חיבור אירועי לחיצה לכל התמונות בגלריה
-            const galleryImages = document.querySelectorAll('.gallery img');
-            galleryImages.forEach(img => {
-                img.onclick = function() {
-                    openImageFullscreen(this.getAttribute('data-full-img'));
-                };
             });
-        };
+            
+            // פתיחת תמונה 1 מהגלריה
+            document.getElementById('gallery-img-1').addEventListener('click', function() {
+                openImageFullscreen('https://res.cloudinary.com/dpy2hadid/image/upload/v1741557741/PURIM/davd4gh0krhaseoabhhe.jpg');
+            });
+            
+            // פתיחת תמונה 2 מהגלריה
+            document.getElementById('gallery-img-2').addEventListener('click', function() {
+                openImageFullscreen('https://res.cloudinary.com/dpy2hadid/image/upload/v1741557740/PURIM/a4s7yyfkj9hpplulk44h.jpg');
+            });
+            
+            // פתיחת תמונה 3 מהגלריה
+            document.getElementById('gallery-img-3').addEventListener('click', function() {
+                openImageFullscreen('https://res.cloudinary.com/dpy2hadid/image/upload/v1741557740/PURIM/ozn3jnvdr6ipumowxquq.jpg');
+            });
+        });
         
-        // פונקציה לפתיחת תמונה במסך מלא
+        // פתיחת תמונה במסך מלא
         function openImageFullscreen(src) {
             const fullscreenOverlay = document.createElement('div');
             fullscreenOverlay.style.position = 'fixed';
@@ -388,10 +423,8 @@
                 document.body.removeChild(fullscreenOverlay);
             });
         }
-
-        <script>
-        // פונקציות נוספות וקוד התנהגותי
         
+        // פתיחת פופאפ
         function openPopup(choice) {
             if (choice === 'no') {
                 document.getElementById('sorry-popup').style.display = 'block';
@@ -402,6 +435,7 @@
             }
         }
         
+        // סגירת פופאפ
         function closePopup() {
             document.getElementById('popup').style.display = 'none';
             document.getElementById('sorry-popup').style.display = 'none';
@@ -409,13 +443,14 @@
             document.getElementById('overlay').style.display = 'none';
         }
         
+        // שליחת הזמנה בווטסאפ
         function sendWhatsAppInvite() {
             var link = "https://eliran0321.github.io/eliran0321/";
             var whatsappURL = "https://api.whatsapp.com/send?text=" + encodeURIComponent("🎭 היי! אני מזמין אותך לאירוע פורים שמח! 🎉 " + link);
             window.open(whatsappURL, "_blank");
         }
 
-        // שליחת הטופס עם fetch API
+        // שליחת הטופס
         function submitFormData(event) {
             event.preventDefault();
             
@@ -461,6 +496,7 @@
             });
         }
         
+        // וידוא נתוני טופס
         function validateForm() {
             let isValid = true;
             const firstName = document.getElementById('firstName').value;
@@ -493,7 +529,6 @@
 
             return isValid;
         }
-    </script>
     </script>
 </body>
 </html>
