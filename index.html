@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>משתה פורים תשפ"ה</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            direction: rtl;
+            background: linear-gradient(to bottom, #ffcc00, #ff6600);
+            color: white;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            margin: auto;
+        }
+        .title {
+            font-size: 30px;
+            font-weight: bold;
+            background: #d40000;
+            padding: 15px;
+            border-radius: 10px;
+            display: inline-block;
+            color: white;
+            margin-top: 10px;
+        }
+        .subtitle {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 5px;
+            color: #4b0082;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        button {
+            background-color: #ffffff;
+            color: #ff6600;
+            border: none;
+            padding: 10px;
+            width: 45%;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #e6e6e6;
+        }
+        .weather, .location {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+        .popup, .thank-you-popup, .sorry-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            z-index: 1000;
+            width: 80%;
+            max-width: 350px;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            text-align: right;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        .submit-btn {
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            width: 100%;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .submit-btn:hover {
+            background-color: #e65c00;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="title">משתה פורים תשפ"ה</div>
+        <div class="subtitle">🎭 מי שנכנס אדר מרבין בשמחה! 🎭</div>
+        <p>יום ו', 14 במרץ, 10:30 - 14:30</p>
+        <p>בית משפחת נחמיה, רח' פרנק 15, חדרה</p>
+
+        <div class="buttons">
+            <button onclick="openPopup('yes')">אשתתף</button>
+            <button onclick="openPopup('no')">לא אשתתף</button>
+        </div>
+
+        <div class="weather">
+            <h3>מזג אוויר ביום האירוע</h3>
+            <p>בהיר | 27°C</p>
+            <p>מינ' 16° | מקס' 27°</p>
+        </div>
+
+        <div class="location">
+            <h3>📍 הוראות הגעה</h3>
+            <a href="https://waze.com/ul?q=רח' פרנק 15, חדרה" class="invite">🚗 ניווט בוויז</a>
+        </div>
+
+        <p>📲 רוצה להזמין חברים? שלח להם את ההזמנה!</p>
+        <button class="invite" onclick="sendWhatsAppInvite()">💬 שליחת הזמנה בווטסאפ</button>
+    </div>
+
+    <div id="overlay" class="overlay" onclick="closePopup()"></div>
+
+    <!-- אישור השתתפות -->
+    <div id="popup" class="popup">
+        <h2>אישור השתתפות</h2>
+        <form id="participation-form" onsubmit="submitForm(event)">
+            <div class="form-group">
+                <label for="firstName">שם פרטי *</label>
+                <input type="text" id="firstName" name="firstName" required>
+                <div id="firstName-error" class="error">אנא הזן שם פרטי</div>
+            </div>
+            <div class="form-group">
+                <label for="lastName">שם משפחה *</label>
+                <input type="text" id="lastName" name="lastName" required>
+                <div id="lastName-error" class="error">אנא הזן שם משפחה</div>
+            </div>
+            <div class="form-group">
+                <label for="participants">מספר משתתפים *</label>
+                <input type="number" id="participants" name="participants" min="1" required>
+                <div id="participants-error" class="error">אנא הזן מספר משתתפים תקין</div>
+            </div>
+            <button type="submit" class="submit-btn">שלח אישור</button>
+        </form>
+    </div>
+
+    <!-- פופאפ תודה -->
+    <div id="thank-you-popup" class="thank-you-popup">
+        <h2>תודה על ההרשמה!</h2>
+        <p>נשמח לראותכם באירוע!</p>
+        <p>פרטי ההרשמה נשלחו בהצלחה.</p>
+        <button onclick="closePopup()" class="submit-btn">סגור</button>
+    </div>
+
+    <!-- פופאפ התנצלות -->
+    <div id="sorry-popup" class="sorry-popup">
+        <h2>האמת שזה ממש מבאס... 😢</h2>
+        <p>אבל מצווה גדולה להיות בשמחה!</p>
+        <p>נשמח לראותך בפעם אחרת!</p>
+        <button onclick="closePopup()" class="submit-btn">סגור</button>
+    </div>
+
+    <script>
+        function openPopup(choice) {
+            if (choice === 'no') {
+                document.getElementById('sorry-popup').style.display = 'block';
+                document.getElementById('overlay').style.display = 'block';
+            } else {
+                document.getElementById('popup').style.display = 'block';
+                document.getElementById('overlay').style.display = 'block';
+            }
+        }
+        
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('sorry-popup').style.display = 'none';
+            document.getElementById('thank-you-popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+        
+        function sendWhatsAppInvite() {
+            var link = "https://eliran0321.github.io/";
+            var whatsappURL = "https://api.whatsapp.com/send?text=" + encodeURIComponent("🎭 היי! אני מזמין אותך לאירוע פורים שמח! 🎉 " + link);
+            window.open(whatsappURL, "_blank");
+        }
+
+        function validateForm() {
+            let isValid = true;
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const participants = document.getElementById('participants').value;
+
+            // בדיקת שם פרטי
+            if (!firstName || firstName.trim() === "") {
+                document.getElementById('firstName-error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('firstName-error').style.display = 'none';
+            }
+
+            // בדיקת שם משפחה
+            if (!lastName || lastName.trim() === "") {
+                document.getElementById('lastName-error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('lastName-error').style.display = 'none';
+            }
+
+            // בדיקת מספר משתתפים
+            if (!participants || isNaN(participants) || participants < 1) {
+                document.getElementById('participants-error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('participants-error').style.display = 'none';
+            }
+
+            return isValid;
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            
+            if (!validateForm()) {
+                return;
+            }
+
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const participants = document.getElementById('participants').value;
+
+            // שליחת המידע למייל
+            const emailBody = `
+                שם פרטי: ${firstName}
+                שם משפחה: ${lastName}
+                מספר משתתפים: ${participants}
+            `;
+
+            // שליחה למייל באמצעות mailto
+            const mailtoLink = `mailto:ELIRAN0321@GMAIL.COM?subject=הרשמה לאירוע פורים&body=${encodeURIComponent(emailBody)}`;
+            
+            // פתיחת הלינק במשתמש, שיפתח את תוכנת המייל
+            window.open(mailtoLink);
+
+            // הצגת פופאפ תודה
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('thank-you-popup').style.display = 'block';
+            
+            // איפוס הטופס
+            document.getElementById('participation-form').reset();
+        }
+    </script>
+</body>
+</html>
