@@ -129,6 +129,7 @@
             border-radius: 10px;
             margin: 15px auto;
             display: block;
+            border: 3px solid white;
         }
         .gallery {
             display: flex;
@@ -141,6 +142,7 @@
             width: calc(50% - 10px);
             border-radius: 8px;
             transition: transform 0.3s;
+            border: 2px solid white;
         }
         .gallery img:hover {
             transform: scale(1.05);
@@ -160,7 +162,7 @@
         <div class="subtitle">🎭 מי שנכנס אדר מרבין בשמחה! 🎭</div>
         
         <!-- תמונה ראשית של האירוע -->
-        <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557741/PURIM/dsiiblsaswso7f2xrhmy.jpg" alt="חגיגת פורים" class="event-image">
+        <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557741/PURIM/dsiiblsaswso7f2xrhmy.jpg" alt="חגיגת פורים" class="event-image" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x250?text=תמונת+פורים'">
         
         <p>יום ו', 14 במרץ, 10:30 - 14:30</p>
         <p>בית משפחת נחמיה, רח' פרנק 15, חדרה</p>
@@ -190,10 +192,10 @@
         <!-- גלריית תמונות משנים קודמות -->
         <h3>תמונות מאירועי פורים קודמים</h3>
         <div class="gallery">
-            <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557741/PURIM/davd4gh0krhaseoabhhe.jpg" alt="תמונת פורים 1">
-            <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557740/PURIM/a4s7yyfkj9hpplulk44h.jpg" alt="תמונת פורים 2">
-            <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557740/PURIM/ozn3jnvdr6ipumowxquq.jpg" alt="תמונת פורים 3">
-            <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557741/PURIM/dsiiblsaswso7f2xrhmy.jpg" alt="תמונת פורים 4">
+            <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557741/PURIM/davd4gh0krhaseoabhhe.jpg" alt="תמונת פורים 1" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x150?text=תמונה+1'">
+            <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557740/PURIM/a4s7yyfkj9hpplulk44h.jpg" alt="תמונת פורים 2" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x150?text=תמונה+2'">
+            <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557740/PURIM/ozn3jnvdr6ipumowxquq.jpg" alt="תמונת פורים 3" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x150?text=תמונה+3'">
+            <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557741/PURIM/dsiiblsaswso7f2xrhmy.jpg" alt="תמונת פורים 4" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x150?text=תמונה+4'">
         </div>
 
         <p>📲 רוצה להזמין חברים? שלח להם את ההזמנה!</p>
@@ -232,7 +234,7 @@
         <h2>תודה על ההרשמה!</h2>
         <p>נשמח לראותכם באירוע!</p>
         <p>פרטי ההרשמה נשלחו בהצלחה.</p>
-        <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557741/PURIM/davd4gh0krhaseoabhhe.jpg" alt="תודה" style="max-width: 100%; border-radius: 8px; margin-top: 10px;">
+        <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557741/PURIM/davd4gh0krhaseoabhhe.jpg" alt="תודה" style="max-width: 100%; border-radius: 8px; margin-top: 10px; border: 2px solid #ff6600;" onerror="this.onerror=null; this.src='https://via.placeholder.com/300x200?text=תודה!'">
         <button onclick="closePopup()" class="submit-btn">סגור</button>
     </div>
 
@@ -241,7 +243,7 @@
         <h2>האמת שזה ממש מבאס... 😢</h2>
         <p>אבל מצווה גדולה להיות בשמחה!</p>
         <p>נשמח לראותך בפעם אחרת!</p>
-        <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557740/PURIM/a4s7yyfkj9hpplulk44h.jpg" alt="מבאס" style="max-width: 100%; border-radius: 8px; margin-top: 10px;">
+        <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557740/PURIM/a4s7yyfkj9hpplulk44h.jpg" alt="מבאס" style="max-width: 100%; border-radius: 8px; margin-top: 10px; border: 2px solid #ff6600;" onerror="this.onerror=null; this.src='https://via.placeholder.com/300x200?text=נשמח+לראותך+בפעם+הבאה'">
         <button onclick="closePopup()" class="submit-btn">סגור</button>
     </div>
 
