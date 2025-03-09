@@ -345,6 +345,22 @@
     </div>
 
     <script>
+        // כשהדף נטען
+        window.onload = function() {
+            // חיבור אירועי לחיצה לתמונה הראשית
+            document.querySelector('.event-image-container').onclick = function() {
+                openImageFullscreen('https://res.cloudinary.com/dpy2hadid/image/upload/v1741557741/PURIM/dsiiblsaswso7f2xrhmy.jpg');
+            };
+            
+            // חיבור אירועי לחיצה לכל התמונות בגלריה
+            const galleryImages = document.querySelectorAll('.gallery img');
+            galleryImages.forEach(img => {
+                img.onclick = function() {
+                    openImageFullscreen(this.getAttribute('data-full-img'));
+                };
+            });
+        };
+        
         // פונקציה לפתיחת תמונה במסך מלא
         function openImageFullscreen(src) {
             const fullscreenOverlay = document.createElement('div');
@@ -373,6 +389,9 @@
             });
         }
 
+        <script>
+        // פונקציות נוספות וקוד התנהגותי
+        
         function openPopup(choice) {
             if (choice === 'no') {
                 document.getElementById('sorry-popup').style.display = 'block';
@@ -474,6 +493,7 @@
 
             return isValid;
         }
+    </script>
     </script>
 </body>
 </html>
