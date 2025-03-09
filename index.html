@@ -149,9 +149,11 @@
             border-radius: 8px;
             transition: transform 0.3s;
             border: 2px solid white;
+            cursor: pointer;
         }
         .gallery img:hover {
             transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
         }
         .gallery .image-caption {
             font-size: 12px;
@@ -244,7 +246,7 @@
         <div class="gallery" id="gallery">
             <div class="image-container">
                 <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557741/PURIM/davd4gh0krhaseoabhhe.jpg" alt="תמונת פורים 1" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x150?text=תמונה+1'">
-                <div class="image-caption">לחץ ארוך לפתיחת התמונה</div>
+                <div class="image-caption">לחץ על התמונה להגדלה</div>
             </div>
             <div class="image-container">
                 <img src="https://res.cloudinary.com/dpy2hadid/image/upload/v1741557740/PURIM/a4s7yyfkj9hpplulk44h.jpg" alt="תמונת פורים 2" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x150?text=תמונה+2'">
@@ -431,23 +433,10 @@
                 }
             });
             
-            // הוספת יכולת לחיצה ארוכה לתמונות
+            // הוספת יכולת לחיצה לתמונות
             const images = document.querySelectorAll('.gallery img');
             images.forEach(img => {
-                // הגדרת אירוע לחיצה ארוכה (עבור מובייל)
-                let pressTimer;
-                
-                img.addEventListener('touchstart', function(e) {
-                    pressTimer = setTimeout(function() {
-                        openImageFullscreen(img.src);
-                    }, 500);
-                });
-                
-                img.addEventListener('touchend', function() {
-                    clearTimeout(pressTimer);
-                });
-                
-                // לחיצה רגילה (עבור דסקטופ)
+                // לחיצה רגילה לכל המכשירים
                 img.addEventListener('click', function() {
                     openImageFullscreen(img.src);
                 });
