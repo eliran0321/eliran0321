@@ -204,10 +204,12 @@
     <!-- אישור השתתפות -->
     <div id="popup" class="popup">
         <h2>אישור השתתפות</h2>
-        <form id="participation-form" action="https://formsubmit.co/ELIRAN0321@GMAIL.COM" method="POST" onsubmit="showThankYou(event)">
+        <form id="participation-form" action="https://formsubmit.co/ELIRAN0321@GMAIL.COM" method="POST">
+            <!-- הגדרות FormSubmit לשליחה אוטומטית -->
             <input type="hidden" name="_subject" value="הרשמה לאירוע פורים">
             <input type="hidden" name="_next" value="https://eliran0321.github.io/">
             <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_autoresponse" value="תודה על הרשמתך לאירוע הפורים! פרטיך נקלטו בהצלחה.">
             
             <div class="form-group">
                 <label for="firstName">שם פרטי *</label>
@@ -224,7 +226,7 @@
                 <input type="number" id="participants" name="participants" min="1" required>
                 <div id="participants-error" class="error">אנא הזן מספר משתתפים תקין</div>
             </div>
-            <button type="submit" class="submit-btn">שלח אישור</button>
+            <button type="submit" class="submit-btn" onclick="showThankYouMessage()">שלח אישור</button>
         </form>
     </div>
 
@@ -270,13 +272,12 @@
             window.open(whatsappURL, "_blank");
         }
 
-        function showThankYou(event) {
-            // השאר את הטופס לשליחה אך הצג את הודעת התודה
-            document.getElementById('popup').style.display = 'none';
-            document.getElementById('thank-you-popup').style.display = 'block';
-            
-            // אל תמנע את שליחת הטופס למייל
-            // event.preventDefault();
+        function showThankYouMessage() {
+            // מציג את הודעת התודה אחרי הגשת הטופס
+            setTimeout(function() {
+                document.getElementById('popup').style.display = 'none';
+                document.getElementById('thank-you-popup').style.display = 'block';
+            }, 500);
         }
     </script>
 </body>
