@@ -181,9 +181,8 @@
         }
         .scroll-hint-container {
             position: relative;
-            margin-top: 10px;
-            margin-bottom: 20px;
-            height: 60px;
+            margin: 0 0 15px 0;
+            padding: 10px 0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -191,7 +190,6 @@
             width: 100%;
             background-color: rgba(0,0,0,0.2);
             border-radius: 10px;
-            padding: 5px 0;
         }
         .scroll-hint {
             color: white;
@@ -199,7 +197,6 @@
             font-weight: bold;
             padding: 8px 15px;
             opacity: 1;
-            transition: opacity 0.5s;
             white-space: nowrap;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
         }
@@ -348,6 +345,34 @@
     </div>
 
     <script>
+        // פונקציה לפתיחת תמונה במסך מלא
+        function openImageFullscreen(src) {
+            const fullscreenOverlay = document.createElement('div');
+            fullscreenOverlay.style.position = 'fixed';
+            fullscreenOverlay.style.top = '0';
+            fullscreenOverlay.style.left = '0';
+            fullscreenOverlay.style.width = '100%';
+            fullscreenOverlay.style.height = '100%';
+            fullscreenOverlay.style.backgroundColor = 'rgba(0,0,0,0.9)';
+            fullscreenOverlay.style.zIndex = '9999';
+            fullscreenOverlay.style.display = 'flex';
+            fullscreenOverlay.style.justifyContent = 'center';
+            fullscreenOverlay.style.alignItems = 'center';
+            
+            const fullscreenImg = document.createElement('img');
+            fullscreenImg.src = src;
+            fullscreenImg.style.maxWidth = '90%';
+            fullscreenImg.style.maxHeight = '90%';
+            fullscreenImg.style.borderRadius = '8px';
+            
+            fullscreenOverlay.appendChild(fullscreenImg);
+            document.body.appendChild(fullscreenOverlay);
+            
+            fullscreenOverlay.addEventListener('click', function() {
+                document.body.removeChild(fullscreenOverlay);
+            });
+        }
+
         function openPopup(choice) {
             if (choice === 'no') {
                 document.getElementById('sorry-popup').style.display = 'block';
@@ -449,59 +474,6 @@
 
             return isValid;
         }
-        
-        // פונקציית גלילה להסתרת ההודעה
-        window.addEventListener('load', function() {
-            const scrollHint = document.querySelector('.scroll-hint-container');
-            
-            // מגדיר האזנה לגלילה
-            window.addEventListener('scroll', function() {
-                // מסתיר את ההודעה אחרי גלילה
-                if (window.scrollY > 100) {
-                    scrollHint.style.opacity = '0';
-                    setTimeout(function() {
-                        scrollHint.style.display = 'none';
-                    }, 500);
-                }
-            });
-            
-            // הוספת יכולת לחיצה לתמונות
-            const images = document.querySelectorAll('.gallery img');
-            images.forEach(img => {
-                // לחיצה רגילה לכל המכשירים
-                img.addEventListener('click', function() {
-                    openImageFullscreen(img.src);
-                });
-            });
-            
-            // פתיחת תמונה במסך מלא
-            function openImageFullscreen(src) {
-                const fullscreenOverlay = document.createElement('div');
-                fullscreenOverlay.style.position = 'fixed';
-                fullscreenOverlay.style.top = '0';
-                fullscreenOverlay.style.left = '0';
-                fullscreenOverlay.style.width = '100%';
-                fullscreenOverlay.style.height = '100%';
-                fullscreenOverlay.style.backgroundColor = 'rgba(0,0,0,0.9)';
-                fullscreenOverlay.style.zIndex = '9999';
-                fullscreenOverlay.style.display = 'flex';
-                fullscreenOverlay.style.justifyContent = 'center';
-                fullscreenOverlay.style.alignItems = 'center';
-                
-                const fullscreenImg = document.createElement('img');
-                fullscreenImg.src = src;
-                fullscreenImg.style.maxWidth = '90%';
-                fullscreenImg.style.maxHeight = '90%';
-                fullscreenImg.style.borderRadius = '8px';
-                
-                fullscreenOverlay.appendChild(fullscreenImg);
-                document.body.appendChild(fullscreenOverlay);
-                
-                fullscreenOverlay.addEventListener('click', function() {
-                    document.body.removeChild(fullscreenOverlay);
-                });
-            }
-        });
     </script>
 </body>
 </html>
