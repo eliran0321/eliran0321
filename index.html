@@ -172,7 +172,7 @@
         
         <div class="costume-ideas">
             <h3>🎭 רעיונות לתחפושות</h3>
-            <p>הגיעו מחופשים! שנה זו הנושא הוא: "דמויות מהעבר והעתיד"</p>
+            <p>הגיעו מחופשים! נושא השנה הוא: "גיבורי העל"</p>
         </div>
 
         <div class="weather">
@@ -204,12 +204,8 @@
     <!-- אישור השתתפות -->
     <div id="popup" class="popup">
         <h2>אישור השתתפות</h2>
-        <form id="participation-form" action="https://formsubmit.co/ELIRAN0321@GMAIL.COM" method="POST">
-            <!-- הגדרות FormSubmit לשליחה אוטומטית -->
-            <input type="hidden" name="_subject" value="הרשמה לאירוע פורים">
-            <input type="hidden" name="_next" value="https://eliran0321.github.io/">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_autoresponse" value="תודה על הרשמתך לאירוע הפורים! פרטיך נקלטו בהצלחה.">
+        <form id="participation-form" onsubmit="submitFormData(event)">
+            <!-- טופס ללא action - נשתמש ב-AJAX -->
             
             <div class="form-group">
                 <label for="firstName">שם פרטי *</label>
@@ -226,7 +222,7 @@
                 <input type="number" id="participants" name="participants" min="1" required>
                 <div id="participants-error" class="error">אנא הזן מספר משתתפים תקין</div>
             </div>
-            <button type="submit" class="submit-btn" onclick="showThankYouMessage()">שלח אישור</button>
+            <button type="submit" class="submit-btn">שלח אישור</button>
         </form>
     </div>
 
@@ -267,17 +263,88 @@
         }
         
         function sendWhatsAppInvite() {
-            var link = "https://eliran0321.github.io/";
+            var link = "https://eliran0321.github.io/eliran0321/";
             var whatsappURL = "https://api.whatsapp.com/send?text=" + encodeURIComponent("🎭 היי! אני מזמין אותך לאירוע פורים שמח! 🎉 " + link);
             window.open(whatsappURL, "_blank");
         }
 
-        function showThankYouMessage() {
-            // מציג את הודעת התודה אחרי הגשת הטופס
-            setTimeout(function() {
+        // שליחת הטופס עם fetch API
+        function submitFormData(event) {
+            event.preventDefault();
+            
+            // וידוא שהטופס תקין
+            if (!validateForm()) {
+                return;
+            }
+            
+            // יצירת אובייקט הנתונים
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                participants: document.getElementById('participants').value
+            };
+            
+            // שליחת הנתונים עם fetch
+            fetch('https://formsubmit.co/ajax/ELIRAN0321@GMAIL.COM', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    _subject: "הרשמה לאירוע פורים",
+                    _captcha: "false",
+                    ...formData
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                
+                // מציג את הודעת התודה
                 document.getElementById('popup').style.display = 'none';
                 document.getElementById('thank-you-popup').style.display = 'block';
-            }, 500);
+                
+                // איפוס הטופס
+                document.getElementById('participation-form').reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('אירעה שגיאה בשליחת הטופס. אנא נסה שוב.');
+            });
+        }
+        
+        function validateForm() {
+            let isValid = true;
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const participants = document.getElementById('participants').value;
+
+            // בדיקת שם פרטי
+            if (!firstName || firstName.trim() === "") {
+                document.getElementById('firstName-error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('firstName-error').style.display = 'none';
+            }
+
+            // בדיקת שם משפחה
+            if (!lastName || lastName.trim() === "") {
+                document.getElementById('lastName-error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('lastName-error').style.display = 'none';
+            }
+
+            // בדיקת מספר משתתפים
+            if (!participants || isNaN(participants) || participants < 1) {
+                document.getElementById('participants-error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('participants-error').style.display = 'none';
+            }
+
+            return isValid;
         }
     </script>
 </body>
